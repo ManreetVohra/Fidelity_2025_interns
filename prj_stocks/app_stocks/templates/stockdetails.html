@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            <div>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <table border="2px">
+        <tr>
+            <th>Stock Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Date of Purchase</th>
+        </tr>
+            {% for i in object_list %}
+            <tr>
+                <td>{{i.sId}}</td>
+                <td>{{i.name}}</td>
+                <td>{{i.price}}</td>
+                <td>{{i.quant}}</td>
+                <td>{{i.dop}}</td>
+                <td><button><a href="{% url 'update' i.sId %}">Update</a></button></td>
+                <td><button><a href="{% url 'delete' i.sId %}">Delete</a></button></td>
+            </tr>
+            {% endfor %}
+    </table>
+    <button><a href="{% url 'create' %}">Add one more Stock</a></button><br>
+    <button><a href="{% url 'home' %}">Logout</a></button>
+</body>
+</html>
