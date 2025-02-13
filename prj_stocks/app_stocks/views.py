@@ -1,20 +1,20 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
 from django.views import View
 from django.views.generic import CreateView,ListView,UpdateView,DeleteView
 from app_stocks.models import Stock
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+#Home URL
 class Myclass(View):
     def get(self,request):
         return render(request,"home.html")
 
+#Login URL
 def loginPage(request):
     if request.method=="POST":
         uname=request.POST.get('username')
@@ -35,6 +35,7 @@ def loginPage(request):
         
     return render(request,"login.html")
 
+#Register URL
 def registerUser(request):
     if request.method=="POST":
         uname=request.POST.get('username')
@@ -49,23 +50,26 @@ def registerUser(request):
     
     return render(request,"register.html")
     
+#CRUD-Create a new Stock
 class StockCreate(CreateView):
     model=Stock
     template_name="create.html"
     fields='__all__'
     success_url=reverse_lazy("show")
     
+#CRUD-View details of all Stocks
 class StockList(ListView):
     model=Stock
     template_name="stockdetails.html"
 
-
+#CRUD-Udpate a particular stock based on primary key(Stock ID)
 class StockUpdate(UpdateView):
     model=Stock
     fields='__all__'
     template_name="create.html"
     success_url=reverse_lazy("show")
 
+#CRUD-Delete a particular stock based on primary key(Stock ID)
 class StockDelete(DeleteView):
     model=Stock
     fields="__all__"

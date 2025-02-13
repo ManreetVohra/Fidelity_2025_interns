@@ -1,26 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% if messages %}
-        {% for message in messages %}
-            <div>
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
-    <h1>Login Page</h1>
-    <form action="" method="post">
-        {% csrf_token %}
-        <label for="username">Username</label><br>
-        <input type="text" name="username" id="uname"><br>
-        <label for="password">Password</label><br>
-        <input type="password" name="password" id="pass"><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}
+    Sign In
+{% endblock %}
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px;">
+            <!-- Messages Section -->
+            {% if messages %}
+                <div class="mb-3">
+                    {% for message in messages %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Login Form -->
+            <h2 class="text-center mb-4">Sign In</h2>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" name="username" id="uname" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" name="password" id="pass" class="form-control" required>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

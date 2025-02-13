@@ -1,39 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% if messages %}
-        {% for message in messages %}
-            <div>
-                {{ message }}
+{% extends 'base.html' %}
+{% block title %}
+    Details
+{% endblock %}
+{% block content %}
+    <div class="container my-5">
+        <!-- Display messages -->
+        {% if messages %}
+            <div class="mb-3">
+                {% for message in messages %}
+                    <div class="alert alert-info" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    {% endif %}
-    <table border="2px">
-        <tr>
-            <th>Stock Id</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Date of Purchase</th>
-        </tr>
-            {% for i in object_list %}
-            <tr>
-                <td>{{i.sId}}</td>
-                <td>{{i.name}}</td>
-                <td>{{i.price}}</td>
-                <td>{{i.quant}}</td>
-                <td>{{i.dop}}</td>
-                <td><button><a href="{% url 'update' i.sId %}">Update</a></button></td>
-                <td><button><a href="{% url 'delete' i.sId %}">Delete</a></button></td>
-            </tr>
-            {% endfor %}
-    </table>
-    <button><a href="{% url 'create' %}">Add one more Stock</a></button><br>
-    <button><a href="{% url 'home' %}">Logout</a></button>
-</body>
-</html>
+        {% endif %}
+
+        <!-- Table heading -->
+        <h2 class="text-center mb-4">Stock List</h2>
+
+        <!-- Stock Table -->
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Stock Id</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Date of Purchase</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in object_list %}
+                <tr>
+                    <td>{{ i.sId }}</td>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.price }}</td>
+                    <td>{{ i.quant }}</td>
+                    <td>{{ i.dop }}</td>
+                    <td>
+                        <a href="{% url 'update' i.sId %}" class="btn btn-warning btn-sm">Update</a>
+                        <a href="{% url 'delete' i.sId %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Add and Logout buttons -->
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'create' %}" class="btn btn-success">Add One More Stock</a>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Logout</a>
+        </div>
+    </div>
+{% endblock %}
